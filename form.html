@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Allied</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+      :root {
+        --main-color: #ed1b24;
+        --secondary-color: #f36268;
+        --lighter-color: #e0e0e7;
+        --light-color: #b0b0c0;
+        --dark-color: #52505e;
+        --font-smaller: 14px;
+        --font-bigger: 20px;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      *,
+      ::before,
+      ::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.8;
+        color: var(--dark-color);
+        background-color: #f5f5f5;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      ul {
+        list-style: none;
+      }
+      h1,
+      h2,
+      h3 {
+        font-weight: 700;
+        line-height: 1.25;
+        margin: 0 0 0.5rem;
+      }
+      img {
+        max-width: 100%;
+        vertical-align: middle;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2em;
+      }
+      .form-box {
+        display: flex;
+        flex-direction: column;
+        margin-top: 5em;
+        border: 8px solid var(--lighter-color);
+        border-radius: 15px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      /* ---------- Progress  ---------- */
+      .form-box .progress {
+        position: relative;
+        padding: 1em;
+        background-color: #faf9ff;
+        border-bottom: 1px solid var(--lighter-color);
+      }
+
+      .logo {
+        font-size: 1.75em;
+        font-weight: 800;
+        color: var(--dark-color);
+        padding: 20px 24px;
+        text-align: center;
+      }
+      .logo span {
+        color: var(--main-color);
+      }
+
+      /* progress step */
+      .progress ul.progress-steps {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 2em;
+        flex-wrap: wrap;
+      }
+      .progress ul.progress-steps li {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 2em;
+      }
+      .progress ul.progress-steps li > span {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        font-size: var(--font-smaller);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1em;
+        border-radius: 50%;
+        background-color: var(--lighter-color);
+        z-index: 1;
+      }
+
+      .progress ul.progress-steps li.active > span {
+        color: white;
+        background-color: var(--main-color);
+        border: 4px solid var(--secondary-color);
+        z-index: 1;
+      }
+      .progress ul.progress-steps li p span {
+        font-size: var(--font-smaller);
+        color: var(--light-color);
+        display: none;
+      }
+
+      .progress ul li p {
+        position: absolute;
+        top: -2em;
+        font-size: 12px;
+        min-width: 150px;
+      }
+
+      /* form */
+      .form-box form {
+        width: 100%;
+        padding: 3em 1em;
+        background-color: white;
+        border-radius: 0 0 15px 15px;
+      }
+      form > div {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      form > div p {
+        color: var(--light-color);
+        margin-bottom: 2em;
+      }
+      form > div > div:not(.checkbox) {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 2em;
+      }
+      form :where(input, select) {
+        width: 100%; /* Ensure inputs take full width */
+        height: 40px;
+        padding: 0 1em;
+        border-radius: 7px;
+        outline-color: var(--secondary-color);
+        border: 1px solid var(--lighter-color);
+        background-color: transparent;
+      }
+      form label {
+        font-size: var(--font-smaller);
+        margin-bottom: 0.5em;
+        font-weight: 600;
+      }
+      form .grouping {
+        display: flex;
+      }
+      form .grouping input {
+        max-width: 70px;
+        text-align: center;
+        margin-right: 1em;
+      }
+      form .checkbox input {
+        height: auto;
+      }
+
+      form > div:not(.btn-group) {
+        display: none;
+        -webkit-animation: fadeIn 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+        animation: fadeIn 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+      }
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(10%);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      form > div.active {
+        display: block;
+      }
+
+      /* button */
+      .btn-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1em;
+        margin-top: 2em;
+      }
+      .btn-group [class*="btn-"] {
+        background-color: var(--main-color);
+        color: white;
+        padding: 1em 2.5em;
+        border: 4px solid var(--secondary-color);
+        border-radius: 30px;
+        cursor: pointer;
+        -webkit-transition: background-color 0.3s, border-color 0.3s ease-out;
+        transition: background-color 0.3s, border-color 0.3s ease-out;
+      }
+      .btn-group [class*="btn-"]:disabled {
+        background-color: var(--light-color);
+        border-color: var(--lighter-color);
+        cursor: text;
+      }
+      .btn-group [class*="btn-"]:hover:not(:disabled) {
+        background-color: var(--dark-color);
+        border-color: var(--light-color);
+      }
+      ::placeholder {
+        color: var(--light-color);
+      }
+
+      /* Certificate Group */
+      .certificate-group {
+        margin-bottom: 2em;
+        width: inherit;
+      }
+      .certificate-group > div {
+        margin-bottom: 1em;
+      }
+      .certificate-group button {
+        background-color: var(--main-color);
+        color: white;
+        padding: 0.5em 1em;
+        border: 2px solid var(--secondary-color);
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s, border-color 0.3s ease-out;
+      }
+      .certificate-group button:hover {
+        background-color: var(--dark-color);
+        border-color: var(--light-color);
+      }
+
+      @media screen and (min-width: 768px) {
+        .form-box {
+          flex-direction: row;
+        }
+        .form-box .progress {
+          flex: 1 0 35%;
+          min-width: 300px;
+          padding: 3em;
+        }
+        .logo {
+          margin: -48px -48px 48px;
+        }
+        .progress ul.progress-steps {
+          flex-direction: column;
+          gap: 0;
+        }
+        .progress ul.progress-steps li:not(:last-child)::before {
+          content: "";
+          position: absolute;
+          left: 20px;
+          top: 30px;
+          width: 2px;
+          height: 65px;
+          background-color: var(--lighter-color);
+        }
+        .form-box form {
+          padding: 3em;
+          border-radius: 0 15px 15px 0;
+        }
+        .progress ul li p {
+          position: relative;
+          top: auto;
+          font: inherit;
+        }
+        .progress ul.progress-step li p span {
+          display: block;
+        }
+      }
+
+      /* Checkbox Alignment */
+      .checkbox {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2em;
+      }
+
+      .checkbox input {
+        display: none; /* Hide the default checkbox */
+      }
+
+      .checkbox label {
+        position: relative;
+        padding-left: 30px; /* Space for the custom checkbox */
+        cursor: pointer;
+        font-size: var(--font-smaller);
+        font-weight: 600;
+        user-select: none; /* Prevent text selection */
+      }
+
+      .checkbox label::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--main-color);
+        border-radius: 4px;
+        background-color: white;
+        transition: background-color 0.3s, border-color 0.3s;
+      }
+
+      .checkbox input:checked + label::before {
+        background-color: var(--main-color);
+        border-color: var(--main-color);
+      }
+
+      .checkbox input:checked + label::after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 8px;
+        height: 8px;
+        background-color: white;
+        border-radius: 2px;
+      }
+
+      /* Hover effect */
+      .checkbox label:hover::before {
+        border-color: var(--secondary-color);
+      }
+
+      /* Focus effect */
+      .checkbox input:focus + label::before {
+        box-shadow: 0 0 0 2px var(--secondary-color);
+      }
+
+      /* Mobile View Adjustments */
+      @media screen and (max-width: 767px) {
+        .form-box {
+          flex-direction: column;
+        }
+        .form-box .progress {
+          padding: 1em;
+        }
+        .progress ul.progress-steps {
+          flex-direction: column;
+          gap: 1em;
+        }
+
+        .form-box form {
+          padding: 1em;
+        }
+        .btn-group {
+          flex-direction: column;
+          gap: 1em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="page" class="site">
+      <div class="container">
+        <div class="form-box">
+          <div class="progress">
+            <div class="logo">
+              <a href="/"><img src="./assets/logo.png" alt="Logo" /></a>
+            </div>
+            <ul class="progress-steps">
+              <li class="step active">
+                <span>1</span>
+                <p>Program</p>
+              </li>
+              <li class="step">
+                <span>2</span>
+                <p>Applicant's Details</p>
+              </li>
+              <li class="step">
+                <span>3</span>
+                <p>Parent's Details</p>
+              </li>
+              <li class="step">
+                <span>4</span>
+                <p>Examination Result</p>
+              </li>
+              <li class="step">
+                <span>5</span>
+                <p>Applicant's Address</p>
+              </li>
+              <li class="step">
+                <span>6</span>
+                <p>Survey</p>
+              </li>
+            </ul>
+          </div>
+          <form id="multiStepForm" action="">
+            <div class="form-one form-step active">
+              <h2>Basic Information</h2>
+              <p>Enter Your Personal Information Correctly</p>
+              <div>
+                <label for="program">Program/Course Applied For</label>
+                <select name="program" id="program" required>
+                  <option value="">Select Your Program</option>
+                  <option value="Pakistan">Pakistan</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-two form-step">
+              <h2>Applicant Detail</h2>
+              <p>Enter Your Personal Information Correctly</p>
+              <div>
+                <label for="fullName">Applicant's Full Name</label>
+                <input type="text" id="fullName" required />
+              </div>
+              <div>
+                <label for="cnic">Applicant's CNIC/Form-B</label>
+                <input
+                  type="text"
+                  id="cnic"
+                  placeholder="E.g.xxxxx-xxxxxxx-x"
+                  required
+                />
+              </div>
+              <div>
+                <label for="email">Applicant's Email Address </label>
+                <input type="email" id="email" required />
+              </div>
+              <div>
+                <label for="contact">Applicant's Contact</label>
+                <input
+                  type="text"
+                  id="contact"
+                  placeholder="0301-2345678"
+                  required
+                />
+              </div>
+              <div>
+                <label for="dob">Date Of Birth</label>
+                <input type="date" id="dob" required />
+              </div>
+              <div>
+                <label for="nationality">Nationality</label>
+                <input type="text" id="nationality" required />
+              </div>
+              <div>
+                <label for="religion">Religion</label>
+                <input type="text" id="religion" required />
+              </div>
+              <div>
+                <label for="gender">Gender</label>
+                <select name="gender" id="gender" required>
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label for="bloodGroup">Blood Group</label>
+                <select name="bloodGroup" id="bloodGroup" required>
+                  <option value="">Select Blood Group</option>
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-three form-step">
+              <h2>Parent's Detail</h2>
+              <p>Enter Your Parent's Detail Correctly</p>
+              <div>
+                <label for="parentName">Father's/Guardian's Name</label>
+                <input type="text" id="parentName" required />
+              </div>
+              <div>
+                <label for="parentCnic">Father's/Guardian's CNIC</label>
+                <input
+                  type="text"
+                  id="parentCnic"
+                  placeholder="E.g.xxxxx-xxxxxxx-x"
+                  required
+                />
+              </div>
+              <div>
+                <label for="parentContact">Father's/Guardian's Contact</label>
+                <input
+                  type="text"
+                  id="parentContact"
+                  placeholder="0301-2345678"
+                  required
+                />
+              </div>
+              <div>
+                <label for="parentOccupation"
+                  >Father's/Guardian's Occupation</label
+                >
+                <input type="text" id="parentOccupation" required />
+              </div>
+              <div>
+                <label for="familyIncome"
+                  >Average Family Income (monthly)</label
+                >
+                <select name="familyIncome" id="familyIncome" required>
+                  <option value="">Select Average Monthly Income</option>
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+              <div>
+                <label for="gaurdianRelationship"
+                  >Gaurdian's Relationship (with Applicant)</label
+                >
+                <input type="text" id="gaurdianRelationship" required />
+              </div>
+            </div>
+            <div class="form-four form-step">
+              <h2>Examination Result</h2>
+              <p>Enter Your Examination Result Correctly</p>
+              <div class="certificate-group">
+                <div>
+                  <label for="certificate">Certificate/Degree</label>
+                  <select name="certificate" id="certificate" required>
+                    <option value="">Please Select Certificate/Degree</option>
+                    <option value="highSchool">High School</option>
+                    <option value="bachelor">Bachelor</option>
+                    <option value="master">Master</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="institute">Institute</label>
+                  <input type="text" id="institute" required />
+                </div>
+                <div>
+                  <label for="boardUniversity">Board/University</label>
+                  <input type="text" id="boardUniversity" required />
+                </div>
+                <div>
+                  <label for="year">Year</label>
+                  <input type="text" id="year" required />
+                </div>
+                <div>
+                  <label for="marks">Marks/Percentage</label>
+                  <input type="text" id="marks" required />
+                </div>
+                <div>
+                  <label for="majorSubjects">Major Subjects</label>
+                  <input type="text" id="majorSubjects" required />
+                </div>
+                <div>
+                  <label for="document"
+                    >Attach Relevant Document (only jpeg & pdf format is
+                    allowed)</label
+                  >
+                  <input type="file" id="document" required />
+                </div>
+                <div>
+                  <button type="button" class="add-document">
+                    Add another Certificate/Degree
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="form-five form-step">
+              <h2>Applicant's Address</h2>
+              <p>Enter Your Address Information Correctly</p>
+              <div>
+                <label for="permanentAddress">Permanent Address</label>
+                <input
+                  type="text"
+                  id="permanentAddress"
+                  placeholder="House No xxxxxxxxxxxxxxx"
+                  required
+                />
+              </div>
+              <div>
+                <label for="postalAddress">Postal Address</label>
+                <input
+                  type="text"
+                  id="postalAddress"
+                  placeholder="House No xxxxxxxxxxxxxxx"
+                  required
+                />
+              </div>
+              <div>
+                <label for="city">City</label>
+                <input type="text" id="city" placeholder="Islamabad" required />
+              </div>
+              <div>
+                <label for="state">State/Province</label>
+                <input type="text" id="state" placeholder="Punjab" required />
+              </div>
+              <div>
+                <label for="country">Country</label>
+                <select name="country" id="country" required>
+                  <option value="">Select Country</option>
+                  <option value="Pakistan">Pakistan</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-six form-step">
+              <h2>Survey</h2>
+              <p>How did you hear about us?</p>
+              <div class="checkbox">
+                <input type="checkbox" id="collegeFair" />
+                <label for="collegeFair">College fair</label>
+              </div>
+              <div class="checkbox">
+                <input type="checkbox" id="highSchoolCounselor" />
+                <label for="highSchoolCounselor">High school counselor</label>
+              </div>
+              <div class="checkbox">
+                <input type="checkbox" id="studentReferral" />
+                <label for="studentReferral"
+                  >Current student/alumni referral</label
+                >
+              </div>
+              <div class="checkbox">
+                <input type="checkbox" id="internetSearch" />
+                <label for="internetSearch">Internet search</label>
+              </div>
+              <div class="checkbox">
+                <input type="checkbox" id="socialMedia" />
+                <label for="socialMedia"
+                  >Social media (Facebook/Instagram)</label
+                >
+              </div>
+              <div class="checkbox">
+                <input type="checkbox" id="familyFriend" />
+                <label for="familyFriend">Family/friend</label>
+              </div>
+              <div class="checkbox">
+                <input type="checkbox" id="collegeWebsite" />
+                <label for="collegeWebsite">College website</label>
+              </div>
+              <div class="checkbox">
+                <input type="checkbox" id="other" />
+                <label for="other">Other</label>
+              </div>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn-prev" disabled>Back</button>
+              <button type="button" class="btn-next">Next Step</button>
+              <button type="button" class="btn-submit">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+      const nextButton = document.querySelector(".btn-next");
+      const prevButton = document.querySelector(".btn-prev");
+      const submitButton = document.querySelector(".btn-submit");
+      const steps = document.querySelectorAll(".step");
+      const formSteps = document.querySelectorAll(".form-step");
+      const addDocumentButton = document.querySelector(".add-document");
+      const certificateGroup = document.querySelector(".certificate-group");
+      const form = document.getElementById("multiStepForm");
+
+      let active = 1;
+
+      nextButton.addEventListener("click", () => {
+        if (validateFormStep(active)) {
+          active++;
+          if (active > steps.length) {
+            active = steps.length;
+          }
+          updateForm();
+          updateProgress();
+        }
+      });
+
+      prevButton.addEventListener("click", () => {
+        active--;
+        if (active < 1) {
+          active = 1;
+        }
+        updateForm();
+        updateProgress();
+      });
+
+      addDocumentButton.addEventListener("click", () => {
+        const newCertificateGroup = document.createElement("div");
+        newCertificateGroup.classList.add("certificate-group");
+        newCertificateGroup.innerHTML = `
+    <div>
+      <label for="certificate">Certificate/Degree</label>
+      <select name="certificate" id="certificate" required>
+        <option value="">Please Select Certificate/Degree</option>
+        <option value="highSchool">High School</option>
+        <option value="bachelor">Bachelor</option>
+        <option value="master">Master</option>
+      </select>
+    </div>
+    <div>
+      <label for="institute">Institute</label>
+      <input type="text" id="institute" placeholder="Institute" required />
+    </div>
+    <div>
+      <label for="boardUniversity">Board/University</label>
+      <input type="text" id="boardUniversity" placeholder="Board/University" required />
+    </div>
+    <div>
+      <label for="year">Year</label>
+      <input type="text" id="year" placeholder="Year" required />
+    </div>
+    <div>
+      <label for="marks">Marks/Percentage</label>
+      <input type="text" id="marks" placeholder="Marks/Percentage" required />
+    </div>
+    <div>
+      <label for="majorSubjects">Major Subjects</label>
+      <input type="text" id="majorSubjects" placeholder="Major Subjects" required />
+    </div>
+    <div>
+      <label for="document">Attach Relevant Document (only jpeg & pdf format is allowed)</label>
+      <input type="file" id="document" required />
+    </div>
+    <div>
+      <button type="button" class="add-document">Add another Certificate/Degree</button>
+      <button type="button" class="remove-document">Remove</button>
+    </div>
+  `;
+        certificateGroup.appendChild(newCertificateGroup);
+
+        // Attach event listeners to the new buttons
+        const newAddDocumentButton =
+          newCertificateGroup.querySelector(".add-document");
+        const newRemoveDocumentButton =
+          newCertificateGroup.querySelector(".remove-document");
+
+        newAddDocumentButton.addEventListener("click", (event) => {
+          event.stopPropagation(); // Prevent the event from bubbling up to the parent element
+          addDocumentButton.click();
+        });
+
+        newRemoveDocumentButton.addEventListener("click", (event) => {
+          event.stopPropagation(); // Prevent the event from bubbling up to the parent element
+          newCertificateGroup.remove();
+        });
+      });
+
+      certificateGroup.addEventListener("click", (event) => {
+        if (event.target.classList.contains("remove-document")) {
+          event.target.parentElement.parentElement.remove();
+        }
+      });
+
+      const updateForm = () => {
+        formSteps.forEach((formStep, index) => {
+          if (index === active - 1) {
+            formStep.classList.add("active");
+          } else {
+            formStep.classList.remove("active");
+          }
+        });
+      };
+
+      const updateProgress = () => {
+        steps.forEach((step, index) => {
+          if (index < active) {
+            step.classList.add("active");
+          } else {
+            step.classList.remove("active");
+          }
+        });
+
+        prevButton.disabled = active === 1;
+        if (active === steps.length) {
+          nextButton.style.display = "none";
+          submitButton.style.display = "inline-block";
+        } else {
+          nextButton.style.display = "inline-block";
+          submitButton.style.display = "none";
+        }
+      };
+
+      const validateFormStep = (step) => {
+        const currentStep = formSteps[step - 1];
+        const inputs = currentStep.querySelectorAll("input, select");
+        let isValid = true;
+
+        inputs.forEach((input) => {
+          if (!input.checkValidity()) {
+            isValid = false;
+            input.reportValidity();
+          }
+        });
+
+        return isValid;
+      };
+
+      submitButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        const checkboxes = document.querySelectorAll(
+          ".form-six .checkbox input[type='checkbox']"
+        );
+        let isChecked = false;
+
+        checkboxes.forEach((checkbox) => {
+          if (checkbox.checked) {
+            isChecked = true;
+          }
+        });
+
+        if (!isChecked) {
+          alert("Please select at least one option in the survey.");
+        } else {
+          window.location.href = "chalan.html";
+        }
+      });
+
+      updateForm();
+      updateProgress();
+    </script>
+  </body>
+</html>

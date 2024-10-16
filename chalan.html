@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Allied</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+      :root {
+        --primary-color: #ed1b24;
+        --primary-light: #f36268;
+        --secondary-color: #15151f;
+        --text-light: #6b7280;
+        --extra-light: #f8f7fd;
+        --white: #ffffff;
+        --max-width: 1200px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        padding: 20px;
+        background-color: #f8f9fa;
+        color: #343a40;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      .btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border: 3px solid var(--primary-light);
+        border-radius: 30px;
+        cursor: pointer;
+        transition: background-color 0.3s, border-color 0.3s ease-out;
+      }
+
+      .btn:hover {
+        background-color: var(--primary-light);
+        border-color: var(--primary-color);
+      }
+
+      .btn-whatsapp {
+        background-color: #25d366;
+        color: white;
+        border: 3px solid #25d366;
+      }
+
+      .btn-whatsapp:hover {
+        background-color: #21c35c;
+        border-color: #21c35c;
+      }
+
+      .container {
+        max-width: var(--max-width);
+        margin: auto;
+      }
+
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -10px;
+      }
+
+      .column {
+        flex: 1;
+        padding: 10px;
+        border-right: 1px solid #dee2e6;
+        margin-bottom: 20px;
+      }
+
+      .column:last-child {
+        border-right: none;
+      }
+
+      .d-flex {
+        display: flex;
+      }
+
+      .flex-col {
+        flex-direction: column;
+      }
+
+      .justify-content-between {
+        justify-content: space-between;
+      }
+
+      .justify-content-center {
+        justify-content: center;
+      }
+
+      .align-center {
+        align-self: center;
+      }
+
+      .logo {
+        width: 150px;
+        margin-bottom: 20px;
+      }
+
+      .title {
+        margin-top: 5px;
+      }
+
+      .student-name {
+        margin-bottom: 10px;
+      }
+
+      .bar-code {
+        width: 200px;
+        align-self: center;
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+
+      table {
+        margin-top: 20px;
+        border: 1px solid #dee2e6;
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
+      }
+
+      table th,
+      table td {
+        padding: 10px;
+        border: 1px solid #dee2e6;
+        text-align: left;
+      }
+
+      table th {
+        background-color: #f1f3f5;
+      }
+
+      hr {
+        border-top: 1px solid #dee2e6;
+        margin: 20px 0;
+      }
+
+      .message-section {
+        margin-bottom: 40px;
+        background-color: #fff;
+        padding: 30px;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .message-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #343a40;
+      }
+
+      .message-text {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        color: #6b7280;
+      }
+
+      .button-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .pdf-container {
+        width: 100%;
+        height: 600px;
+        margin-bottom: 20px;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      @media (max-width: 768px) {
+        .column {
+          flex: 100%;
+          border-right: none;
+          border-bottom: 1px solid #dee2e6;
+        }
+
+        .column:last-child {
+          border-bottom: none;
+        }
+
+        .button-group {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .btn {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="message-section">
+        <h2 class="message-title">Application Submitted</h2>
+        <p class="message-text">
+          Thank you for submitting your application. Please download your
+          application Challan Form below.
+        </p>
+        <div class="button-group">
+          <a href="#" class="btn" id="download-btn">Download Challan</a>
+          <a href="form.html" class="btn">Edit</a>
+          <a
+            href="https://wa.me/+923183433995?text=Please%20find%20my%20Challan%20Form%20attached."
+            class="btn btn-whatsapp"
+            target="_blank"
+            >Share on WhatsApp</a
+          >
+        </div>
+        <p class="message-text">
+          Please send your paid Challan Form copy to our WhatsApp number
+          <strong>+923183433995</strong>
+        </p>
+      </div>
+
+      <div class="pdf-container" id="challan-container">
+        <!-- Challan content will be generated here -->
+      </div>
+    </div>
+
+    <script>
+      function generateChallan() {
+        const challanContainer = document.getElementById("challan-container");
+        const challanContent = `
+          <div class="row">
+            <div class="column">
+              <div class="d-flex justify-content-between">
+                <strong>HACN&HS707</strong>
+                <strong>STUDENT COPY</strong>
+              </div>
+               <div class="d-flex  justify-content-between">
+                <img src="./assets/logo.png" alt="Logo" class="align-center logo" />
+                <img src="./assets/allied-bank-logo.png" alt="Logo" class="align-center logo" />
+              </div>
+              <div class="d-flex justify-content-between">
+                <div class="d-flex flex-col">
+                  <span>Date:</span>
+                  <span>08/09/2022</span>
+                </div>
+                <div class="d-flex flex-col">
+                  <span>Account: 75-HBL</span>
+                  <span>HMC Taxila</span>
+                </div>
+              </div>
+              <div class="d-flex flex-col justify-content-center">
+                <strong>A/C No: PK42ABPA 001009110 0790010</strong>
+              </div>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col" colspan="2">Description</th>
+                    <th scope="col">Amount in PKR.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-label="Account" colspan="2">
+                      Application Processing Fee
+                    </td>
+                    <td data-label="Amount">PKR 3500/-</td>
+                  </tr>
+                </tbody>
+              </table>
+              <hr />
+              <div>
+                <div class="d-flex justify-content-between">
+                  <strong>Bank Stamp</strong>
+                  <span>Signature</span>
+                </div>
+                <br />
+                <div class="d-flex">
+                  <span>Date:</span>
+                  <span>______________</span>
+                </div>
+                
+                <p>
+                  Note: Fee can be deposited at any branch of Allied Bank Limited in
+                  any city.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="d-flex justify-content-between">
+                <strong>HACN&HS707</strong>
+                <strong>COLLEGE COPY</strong>
+              </div>
+               <div class="d-flex  justify-content-between">
+                <img src="./assets/logo.png" alt="Logo" class="align-center logo" />
+                <img src="./assets/allied-bank-logo.png" alt="Logo" class="align-center logo" />
+
+              </div>
+              <div class="d-flex justify-content-between">
+                <div class="d-flex flex-col">
+                  <span>Date:</span>
+                  <span>08/09/2022</span>
+                </div>
+                <div class="d-flex flex-col">
+                  <span>Account: 75-HBL</span>
+                  <span>HMC Taxila</span>
+                </div>
+              </div>
+              <div class="d-flex flex-col justify-content-center">
+                <strong>A/C No: PK42ABPA 001009110 0790010</strong>
+              </div>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col" colspan="2">Description</th>
+                    <th scope="col">Amount in PKR.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-label="Account" colspan="2">
+                      Application Processing Fee
+                    </td>
+                    <td data-label="Amount">PKR 3500/-</td>
+                  </tr>
+                </tbody>
+              </table>
+              <hr />
+             <div>
+                <div class="d-flex justify-content-between">
+                  <strong>Bank Stamp</strong>
+                  <span>Signature</span>
+                </div>
+                <br />
+                <div class="d-flex">
+                  <span>Date:</span>
+                  <span>______________</span>
+                </div>
+                <p>
+                  Note: Fee can be deposited at any branch of Allied Bank Limited in
+                  any city.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="d-flex justify-content-between">
+                <strong>HACN&HS707</strong>
+                <strong>BANK COPY</strong>
+              </div>
+              <div class="d-flex  justify-content-between">
+                <img src="./assets/logo.png" alt="Logo" class="align-center logo" />
+                <img src="./assets/allied-bank-logo.png" alt="Logo" class="align-center logo" />
+
+              </div>
+              <div class="d-flex justify-content-between">
+                <div class="d-flex flex-col">
+                  <span>Date:</span>
+                  <span>08/09/2022</span>
+                </div>
+                <div class="d-flex flex-col">
+                  <span>Account: 75-HBL</span>
+                  <span>HMC Taxila</span>
+                </div>
+              </div>
+              <div class="d-flex flex-col justify-content-center">
+                <strong>A/C No: PK42ABPA 001009110 0790010</strong>
+              </div>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col" colspan="2">Description</th>
+                    <th scope="col">Amount in PKR.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-label="Account" colspan="2">
+                      Application Processing Fee
+                    </td>
+                    <td data-label="Amount">PKR 3500/-</td>
+                  </tr>
+                </tbody>
+              </table>
+              <hr />
+              <div>
+                <div class="d-flex justify-content-between">
+                  <strong>Bank Stamp</strong>
+                  <span>Signature</span>
+                </div>
+                <br />
+                <div class="d-flex">
+                  <span>Date:</span>
+                  <span>______________</span>
+                </div>
+                <p>
+                  Note: Fee can be deposited at any branch of Allied Bank Limited in
+                  any city.
+                </p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Create a temporary container to hold the HTML content
+        const tempContainer = document.createElement("div");
+        tempContainer.innerHTML = challanContent;
+        document.body.appendChild(tempContainer);
+
+        // Use html2canvas to capture the HTML content as an image
+        html2canvas(tempContainer).then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+
+          // Create a PDF using jsPDF
+          const pdf = new jsPDF();
+          pdf.addImage(imgData, "PNG", 15, 15, 180, 0);
+          const pdfData = pdf.output("datauristring");
+
+          // Create an iframe element
+          const iframe = document.createElement("iframe");
+          iframe.src = pdfData;
+          iframe.width = "100%";
+          iframe.height = "100%";
+          iframe.style.border = "none";
+
+          // Append the iframe to the container
+          challanContainer.innerHTML = "";
+          challanContainer.appendChild(iframe);
+
+          // Remove the temporary container
+          document.body.removeChild(tempContainer);
+
+          // Add download functionality
+          document
+            .getElementById("download-btn")
+            .addEventListener("click", () => {
+              pdf.save("Challan.pdf");
+            });
+        });
+      }
+
+      // Call the generateChallan function when the page loads
+      document.addEventListener("DOMContentLoaded", generateChallan);
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.0.0-rc.5/html2canvas.min.js"></script>
+  </body>
+</html>
